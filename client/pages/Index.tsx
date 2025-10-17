@@ -75,7 +75,7 @@ export default function Index() {
   }, [htmlInput, cssInput, jsInput]);
 
   const handleSaveSnippet = () => {
-    if (!codeInput.trim()) {
+    if (!htmlInput.trim() && !cssInput.trim() && !jsInput.trim()) {
       alert("Please paste some code first");
       return;
     }
@@ -85,7 +85,9 @@ export default function Index() {
     setSnippets(StorageManager.getSnippets());
 
     // Reset form
-    setCodeInput("");
+    setHtmlInput("");
+    setCssInput("");
+    setJsInput("");
     setSnippetTitle("Untitled Snippet");
     alert(`Snippet "${snippetTitle}" saved successfully!`);
   };

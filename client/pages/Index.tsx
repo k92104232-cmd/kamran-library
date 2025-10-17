@@ -22,6 +22,7 @@ import {
   Code2,
   Zap,
   ChevronDown,
+  Plus,
 } from "lucide-react";
 
 export default function Index() {
@@ -118,78 +119,65 @@ export default function Index() {
       : StorageManager.getSnippetsByFolder(selectedFolder);
 
   return (
-    <div className={`min-h-screen transition-colors duration-300 ${
-      isDark ? "dark bg-slate-950" : "bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50"
-    }`}>
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-slate-100">
       {/* Header */}
-      <header className="sticky top-0 z-50 backdrop-blur-xl bg-white/30 dark:bg-slate-900/30 border-b border-white/20 dark:border-white/10">
+      <header className="sticky top-0 z-50 bg-slate-950/80 backdrop-blur-xl border-b border-slate-700/50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-20">
             {/* Logo */}
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-secondary flex items-center justify-center">
-                <code className="text-white font-bold text-lg">{"</>"}</code>
+              <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center shadow-lg shadow-blue-500/50">
+                <Code2 className="w-6 h-6 text-white" />
               </div>
               <div>
-                <h1 className="text-2xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-                  CodeVault
-                </h1>
-                <p className="text-xs text-muted-foreground">
-                  Save, Preview & Share Code
-                </p>
+                <h1 className="text-xl font-bold text-white">CodeVault</h1>
+                <p className="text-xs text-slate-400">Save & Share Code</p>
               </div>
             </div>
 
-            {/* Dark Mode Toggle */}
+            {/* Search Bar */}
+            <div className="flex-1 max-w-xs mx-8">
+              <div className="relative">
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500 pointer-events-none" />
+                <input
+                  type="text"
+                  placeholder="Search..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="w-full pl-9 pr-4 py-2 bg-slate-800 border border-slate-700 rounded-lg text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-blue-500 transition-colors"
+                />
+              </div>
+            </div>
+
+            {/* Theme Toggle */}
             <button
               onClick={() => setIsDark(!isDark)}
-              className="p-3 rounded-xl glass-light hover:bg-white/20 dark:hover:bg-white/15 transition-colors"
-              title="Toggle dark mode"
+              className="p-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-slate-100 transition-colors"
+              title="Toggle theme"
             >
-              {isDark ? (
-                <Sun className="w-5 h-5 text-primary" />
-              ) : (
-                <Moon className="w-5 h-5 text-primary" />
-              )}
+              {isDark ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
             </button>
           </div>
         </div>
       </header>
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          {/* Sidebar */}
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+          {/* Left Sidebar - Folders */}
           <aside className="lg:col-span-1">
-            {/* Search Bar */}
-            <div className="glass-light p-6 rounded-2xl mb-6">
-              <div className="relative">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground pointer-events-none" />
-                <input
-                  type="text"
-                  placeholder="Search snippets..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="glass-input pl-10"
-                />
-              </div>
-            </div>
-
-            {/* Folders Section */}
-            <div className="glass-light p-6 rounded-2xl">
-              <div className="flex items-center justify-between mb-4">
-                <h2 className="text-lg font-semibold">Folders</h2>
-                <button
-                  onClick={() => setShowNewFolderInput(!showNewFolderInput)}
-                  className="p-2 rounded-lg hover:bg-white/10 dark:hover:bg-white/5 transition-colors"
-                  title="Create new folder"
-                >
-                  <FolderPlus className="w-4 h-4" />
-                </button>
-              </div>
+            <div className="sticky top-20 space-y-4">
+              {/* New Folder Button */}
+              <button
+                onClick={() => setShowNewFolderInput(!showNewFolderInput)}
+                className="w-full flex items-center justify-center gap-2 px-4 py-2 bg-gradient-to-r from-blue-600 to-cyan-600 rounded-lg text-white font-medium hover:from-blue-700 hover:to-cyan-700 transition-all shadow-lg shadow-blue-500/30"
+              >
+                <Plus className="w-4 h-4" />
+                New Folder
+              </button>
 
               {/* New Folder Input */}
               {showNewFolderInput && (
-                <div className="mb-4 flex gap-2">
+                <div className="flex gap-2">
                   <input
                     type="text"
                     placeholder="Folder name..."
@@ -198,12 +186,12 @@ export default function Index() {
                     onKeyPress={(e) => {
                       if (e.key === "Enter") handleCreateFolder();
                     }}
-                    className="flex-1 glass-input text-sm"
+                    className="flex-1 px-3 py-2 bg-slate-800 border border-slate-700 rounded-lg text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-blue-500"
                     autoFocus
                   />
                   <button
                     onClick={handleCreateFolder}
-                    className="px-3 py-2 rounded-lg bg-primary hover:bg-secondary text-primary-foreground transition-colors text-sm"
+                    className="px-3 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm"
                   >
                     Create
                   </button>
@@ -211,31 +199,62 @@ export default function Index() {
               )}
 
               {/* Folders List */}
-              <div className="space-y-2 max-h-64 overflow-y-auto">
+              <div className="space-y-2">
+                <h3 className="text-xs font-semibold text-slate-400 uppercase tracking-wide px-2">
+                  Collections
+                </h3>
                 {folders.map((folder) => (
-                  <div
-                    key={folder.id}
-                    className={`p-3 rounded-lg cursor-pointer transition-all flex items-center justify-between ${
-                      selectedFolder === folder.id
-                        ? "bg-primary/20 border border-primary/50"
-                        : "hover:bg-white/10 dark:hover:bg-white/5"
-                    }`}
-                    onClick={() => {
-                      setSelectedFolder(folder.id);
-                      setSearchQuery("");
-                    }}
-                  >
-                    <span className="text-sm font-medium">{folder.name}</span>
-                    {folder.id !== "default" && (
-                      <button
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          handleDeleteFolder(folder.id);
-                        }}
-                        className="p-1 hover:bg-red-500/20 rounded transition-colors"
-                      >
-                        <Trash2 className="w-3 h-3 text-red-500" />
-                      </button>
+                  <div key={folder.id}>
+                    <div
+                      className={`p-3 rounded-lg cursor-pointer transition-all flex items-center justify-between ${
+                        selectedFolder === folder.id
+                          ? "bg-blue-600/20 border border-blue-500/50 text-blue-300"
+                          : "hover:bg-slate-800 text-slate-300"
+                      }`}
+                      onClick={() => {
+                        setSelectedFolder(folder.id);
+                        setSearchQuery("");
+                        toggleFolder(folder.id);
+                      }}
+                    >
+                      <span className="text-sm font-medium">{folder.name}</span>
+                      <div className="flex items-center gap-1">
+                        <span className="text-xs text-slate-500 font-medium">
+                          {snippets.filter((s) => s.folder === folder.id).length}
+                        </span>
+                        {folder.id !== "default" && (
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleDeleteFolder(folder.id);
+                            }}
+                            className="p-1 hover:bg-red-600/20 rounded transition-colors"
+                          >
+                            <Trash2 className="w-3 h-3 text-red-400" />
+                          </button>
+                        )}
+                      </div>
+                    </div>
+
+                    {/* Snippet items in folder */}
+                    {expandedFolders[folder.id] && (
+                      <div className="ml-2 space-y-1 border-l border-slate-700 pl-2">
+                        {snippets
+                          .filter((s) => s.folder === folder.id)
+                          .map((snippet) => (
+                            <div
+                              key={snippet.id}
+                              className="p-2 text-xs text-slate-400 hover:text-slate-100 cursor-pointer rounded hover:bg-slate-800/50 truncate"
+                              onClick={() => {
+                                setCodeInput(
+                                  `${snippet.html}\n<style>\n${snippet.css}\n</style>\n<script>\n${snippet.js}\n</script>`
+                                );
+                              }}
+                            >
+                              {snippet.title}
+                            </div>
+                          ))}
+                      </div>
                     )}
                   </div>
                 ))}
@@ -243,127 +262,165 @@ export default function Index() {
             </div>
           </aside>
 
-          {/* Main Content */}
-          <div className="lg:col-span-2 space-y-6">
+          {/* Main Content Area */}
+          <div className="lg:col-span-3 space-y-6">
             {/* Editor Section */}
-            <div className="glass-light p-8 rounded-2xl">
-              <h2 className="text-2xl font-bold mb-4">Paste Your Code</h2>
-              <p className="text-sm text-muted-foreground mb-4">
-                Paste HTML, CSS, or JavaScript (or mix them all together)
-              </p>
+            <div className="bg-slate-800/50 border border-slate-700/50 rounded-xl overflow-hidden backdrop-blur-sm">
+              {/* Editor Header */}
+              <div className="border-b border-slate-700/50 bg-slate-800/80 px-6 py-4">
+                <div className="flex items-center justify-between mb-4">
+                  <h2 className="text-lg font-bold text-white">Code Editor</h2>
+                  <div className="flex gap-2">
+                    {(["all", "html", "css", "js"] as const).map((tab) => (
+                      <button
+                        key={tab}
+                        onClick={() => setActiveTab(tab)}
+                        className={`px-3 py-1 rounded text-xs font-medium transition-colors ${
+                          activeTab === tab
+                            ? "bg-blue-600 text-white"
+                            : "bg-slate-700 text-slate-400 hover:text-slate-200"
+                        }`}
+                      >
+                        {tab.toUpperCase()}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+                <p className="text-xs text-slate-400">
+                  Paste your HTML, CSS, or JavaScript code
+                </p>
+              </div>
 
+              {/* Textarea */}
               <textarea
                 value={codeInput}
                 onChange={(e) => setCodeInput(e.target.value)}
-                placeholder="Paste your HTML, CSS, or JavaScript code here..."
-                className="w-full h-64 p-4 rounded-xl bg-slate-950/50 dark:bg-slate-950/80 text-slate-100 font-mono text-sm resize-none border border-white/10 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/50"
+                placeholder="Paste your code here..."
+                className="w-full h-80 p-6 bg-slate-950 text-slate-100 font-mono text-sm resize-none border-0 focus:outline-none focus:ring-0"
               />
 
-              <div className="mt-6 flex flex-col sm:flex-row gap-4">
+              {/* Footer Actions */}
+              <div className="border-t border-slate-700/50 bg-slate-800/80 px-6 py-4 flex gap-4">
                 <input
                   type="text"
                   value={snippetTitle}
                   onChange={(e) => setSnippetTitle(e.target.value)}
                   placeholder="Snippet title..."
-                  className="flex-1 glass-input"
+                  className="flex-1 px-4 py-2 bg-slate-700 border border-slate-600 rounded-lg text-white placeholder-slate-500 text-sm focus:outline-none focus:border-blue-500 transition-colors"
                 />
                 <button
                   onClick={handleSaveSnippet}
-                  className="px-6 py-3 rounded-xl bg-gradient-to-r from-primary to-secondary hover:opacity-90 text-primary-foreground font-semibold flex items-center gap-2 transition-all"
+                  className="px-6 py-2 bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-white font-medium rounded-lg flex items-center gap-2 transition-all shadow-lg shadow-blue-500/30"
                 >
                   <Save className="w-4 h-4" />
-                  Save Snippet
+                  Save
                 </button>
               </div>
             </div>
 
-            {/* Preview and Code Sections Container */}
-            <div className="glass-light p-8 rounded-2xl">
-              <h2 className="text-2xl font-bold mb-4">Live Preview</h2>
-              <div>
-                <div className="flex gap-5 max-lg:flex-col">
-                  {/* Code Display Column */}
-                  <div className="flex flex-col w-1/2 max-lg:w-full">
-                    <div className="rounded-xl overflow-hidden border border-white/20 h-96"></div>
-                  </div>
-                  {/* Preview Column */}
-                  <div className="flex flex-col w-1/2 max-lg:w-full">
-                    <LivePreview code={code} isDark={isDark} />
-                  </div>
-                </div>
+            {/* Preview Section */}
+            <div className="bg-slate-800/50 border border-slate-700/50 rounded-xl overflow-hidden backdrop-blur-sm">
+              <div className="border-b border-slate-700/50 bg-slate-800/80 px-6 py-4">
+                <h2 className="text-lg font-bold text-white flex items-center gap-2">
+                  <Zap className="w-5 h-5 text-yellow-400" />
+                  Live Preview
+                </h2>
+              </div>
+              <div className="h-96 bg-slate-950 border-0">
+                <LivePreview code={code} isDark={true} />
               </div>
             </div>
 
-            {/* Code Sections */}
-            <div className="grid grid-cols-1 gap-6">
-              {(code.html || code.css || code.js) && (
-                <>
-                  {code.html && (
-                    <CodeSnippetDisplay
-                      language="html"
-                      code={code.html}
-                      shareLink="temp"
-                    />
-                  )}
-                  {code.css && (
-                    <CodeSnippetDisplay
-                      language="css"
-                      code={code.css}
-                      shareLink="temp"
-                    />
-                  )}
-                  {code.js && (
-                    <CodeSnippetDisplay
-                      language="js"
-                      code={code.js}
-                      shareLink="temp"
-                    />
-                  )}
-                </>
-              )}
-            </div>
+            {/* Code Display Tabs */}
+            {(code.html || code.css || code.js) && (
+              <div className="grid grid-cols-1 gap-6">
+                {code.html && (
+                  <CodeSnippetDisplay
+                    language="html"
+                    code={code.html}
+                    shareLink="temp"
+                  />
+                )}
+                {code.css && (
+                  <CodeSnippetDisplay
+                    language="css"
+                    code={code.css}
+                    shareLink="temp"
+                  />
+                )}
+                {code.js && (
+                  <CodeSnippetDisplay
+                    language="js"
+                    code={code.js}
+                    shareLink="temp"
+                  />
+                )}
+              </div>
+            )}
 
-            {/* Saved Snippets Section */}
+            {/* Saved Snippets Grid */}
             {filteredSnippets.length > 0 && (
-              <div className="glass-light p-8 rounded-2xl">
-                <h2 className="text-2xl font-bold mb-6">
-                  {searchQuery ? "Search Results" : "Saved Snippets"}
-                </h2>
-                <div className="grid grid-cols-1 gap-4">
+              <div className="bg-slate-800/50 border border-slate-700/50 rounded-xl overflow-hidden backdrop-blur-sm">
+                <div className="border-b border-slate-700/50 bg-slate-800/80 px-6 py-4">
+                  <h2 className="text-lg font-bold text-white">
+                    {searchQuery ? "Search Results" : "Saved Snippets"}
+                  </h2>
+                </div>
+                <div className="p-6 grid grid-cols-1 md:grid-cols-2 gap-4">
                   {filteredSnippets.map((snippet) => (
                     <div
                       key={snippet.id}
-                      className="glass-dark p-4 rounded-xl flex items-center justify-between hover:bg-white/20 dark:hover:bg-white/10 transition-colors group"
+                      className="group bg-slate-700/50 border border-slate-600/50 rounded-lg p-4 hover:border-blue-500/50 hover:bg-slate-700/80 transition-all cursor-pointer"
+                      onClick={() => {
+                        setCodeInput(
+                          `${snippet.html}\n<style>\n${snippet.css}\n</style>\n<script>\n${snippet.js}\n</script>`
+                        );
+                      }}
                     >
-                      <div className="flex-1 min-w-0">
-                        <h3 className="font-semibold truncate">
-                          {snippet.title}
-                        </h3>
-                        <p className="text-sm text-muted-foreground">
-                          {StorageManager.getFolders().find(
-                            (f) => f.id === snippet.folder
-                          )?.name || snippet.folder}{" "}
-                          • {new Date(snippet.createdAt).toLocaleDateString()}
-                        </p>
+                      <div className="flex items-start justify-between mb-3">
+                        <div className="flex-1 min-w-0">
+                          <h3 className="font-semibold text-white truncate text-sm">
+                            {snippet.title}
+                          </h3>
+                          <p className="text-xs text-slate-400 mt-1">
+                            {StorageManager.getFolders().find(
+                              (f) => f.id === snippet.folder
+                            )?.name || snippet.folder}{" "}
+                            • {new Date(snippet.createdAt).toLocaleDateString()}
+                          </p>
+                        </div>
                       </div>
-                      <div className="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+
+                      {/* Code Preview */}
+                      <div className="bg-slate-800/50 rounded p-2 mb-3 border border-slate-600/30 max-h-20 overflow-hidden">
+                        <code className="text-xs text-slate-300 font-mono line-clamp-3">
+                          {snippet.html.substring(0, 100)}
+                          {snippet.html.length > 100 ? "..." : ""}
+                        </code>
+                      </div>
+
+                      {/* Actions */}
+                      <div className="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
                         <button
-                          onClick={() => {
+                          onClick={(e) => {
+                            e.stopPropagation();
                             setCodeInput(
                               `${snippet.html}\n<style>\n${snippet.css}\n</style>\n<script>\n${snippet.js}\n</script>`
                             );
                           }}
-                          className="p-2 rounded-lg hover:bg-blue-500/20 transition-colors"
-                          title="Load snippet"
+                          className="flex-1 px-3 py-1 bg-blue-600/20 text-blue-300 rounded text-xs hover:bg-blue-600/40 transition-colors"
                         >
-                          <Copy className="w-4 h-4" />
+                          <Copy className="w-3 h-3 inline mr-1" />
+                          Load
                         </button>
                         <button
-                          onClick={() => handleDeleteSnippet(snippet.id)}
-                          className="p-2 rounded-lg hover:bg-red-500/20 transition-colors"
-                          title="Delete snippet"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            handleDeleteSnippet(snippet.id);
+                          }}
+                          className="px-3 py-1 bg-red-600/20 text-red-300 rounded text-xs hover:bg-red-600/40 transition-colors"
                         >
-                          <Trash2 className="w-4 h-4 text-red-500" />
+                          <Trash2 className="w-3 h-3" />
                         </button>
                       </div>
                     </div>

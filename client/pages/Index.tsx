@@ -253,9 +253,9 @@ export default function Index() {
                               key={snippet.id}
                               className="p-2 text-xs text-slate-400 hover:text-slate-100 cursor-pointer rounded hover:bg-slate-800/50 truncate"
                               onClick={() => {
-                                setCodeInput(
-                                  `${snippet.html}\n<style>\n${snippet.css}\n</style>\n<script>\n${snippet.js}\n</script>`
-                                );
+                                setHtmlInput(snippet.html);
+                                setCssInput(snippet.css);
+                                setJsInput(snippet.js);
                               }}
                             >
                               {snippet.title}

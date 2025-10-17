@@ -271,57 +271,74 @@ export default function Index() {
 
           {/* Main Content Area */}
           <div className="lg:col-span-3 space-y-6">
-            {/* Editor Section */}
-            <div className="bg-slate-800/50 border border-slate-700/50 rounded-xl overflow-hidden backdrop-blur-sm">
-              {/* Editor Header */}
-              <div className="border-b border-slate-700/50 bg-slate-800/80 px-6 py-4">
-                <div className="flex items-center justify-between mb-4">
-                  <h2 className="text-lg font-bold text-white">Code Editor</h2>
-                  <div className="flex gap-2">
-                    {(["all", "html", "css", "js"] as const).map((tab) => (
-                      <button
-                        key={tab}
-                        onClick={() => setActiveTab(tab)}
-                        className={`px-3 py-1 rounded text-xs font-medium transition-colors ${
-                          activeTab === tab
-                            ? "bg-blue-600 text-white"
-                            : "bg-slate-700 text-slate-400 hover:text-slate-200"
-                        }`}
-                      >
-                        {tab.toUpperCase()}
-                      </button>
-                    ))}
-                  </div>
+            {/* Code Editors - Three Separate Sections */}
+            <div className="space-y-4">
+              {/* HTML Editor */}
+              <div className="bg-slate-800/50 border border-slate-700/50 rounded-xl overflow-hidden backdrop-blur-sm">
+                <div className="border-b border-slate-700/50 bg-gradient-to-r from-orange-900/30 to-red-900/30 px-6 py-3 flex items-center gap-2">
+                  <div className="w-2 h-2 rounded-full bg-orange-500"></div>
+                  <h3 className="text-sm font-bold text-white">HTML</h3>
+                  <span className="text-xs text-slate-400 ml-auto">{htmlInput.length} chars</span>
                 </div>
-                <p className="text-xs text-slate-400">
-                  Paste your HTML, CSS, or JavaScript code
-                </p>
+                <textarea
+                  value={htmlInput}
+                  onChange={(e) => setHtmlInput(e.target.value)}
+                  placeholder="Paste your HTML code here..."
+                  className="w-full h-56 p-4 bg-slate-950 text-slate-100 font-mono text-sm resize-none border-0 focus:outline-none focus:ring-0"
+                />
               </div>
 
-              {/* Textarea */}
-              <textarea
-                value={codeInput}
-                onChange={(e) => setCodeInput(e.target.value)}
-                placeholder="Paste your code here..."
-                className="w-full h-80 p-6 bg-slate-950 text-slate-100 font-mono text-sm resize-none border-0 focus:outline-none focus:ring-0"
-              />
-
-              {/* Footer Actions */}
-              <div className="border-t border-slate-700/50 bg-slate-800/80 px-6 py-4 flex gap-4">
-                <input
-                  type="text"
-                  value={snippetTitle}
-                  onChange={(e) => setSnippetTitle(e.target.value)}
-                  placeholder="Snippet title..."
-                  className="flex-1 px-4 py-2 bg-slate-700 border border-slate-600 rounded-lg text-white placeholder-slate-500 text-sm focus:outline-none focus:border-blue-500 transition-colors"
+              {/* CSS Editor */}
+              <div className="bg-slate-800/50 border border-slate-700/50 rounded-xl overflow-hidden backdrop-blur-sm">
+                <div className="border-b border-slate-700/50 bg-gradient-to-r from-blue-900/30 to-cyan-900/30 px-6 py-3 flex items-center gap-2">
+                  <div className="w-2 h-2 rounded-full bg-blue-500"></div>
+                  <h3 className="text-sm font-bold text-white">CSS</h3>
+                  <span className="text-xs text-slate-400 ml-auto">{cssInput.length} chars</span>
+                </div>
+                <textarea
+                  value={cssInput}
+                  onChange={(e) => setCssInput(e.target.value)}
+                  placeholder="Paste your CSS code here..."
+                  className="w-full h-56 p-4 bg-slate-950 text-slate-100 font-mono text-sm resize-none border-0 focus:outline-none focus:ring-0"
                 />
-                <button
-                  onClick={handleSaveSnippet}
-                  className="px-6 py-2 bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-white font-medium rounded-lg flex items-center gap-2 transition-all shadow-lg shadow-blue-500/30"
-                >
-                  <Save className="w-4 h-4" />
-                  Save
-                </button>
+              </div>
+
+              {/* JavaScript Editor */}
+              <div className="bg-slate-800/50 border border-slate-700/50 rounded-xl overflow-hidden backdrop-blur-sm">
+                <div className="border-b border-slate-700/50 bg-gradient-to-r from-yellow-900/30 to-amber-900/30 px-6 py-3 flex items-center gap-2">
+                  <div className="w-2 h-2 rounded-full bg-yellow-500"></div>
+                  <h3 className="text-sm font-bold text-white">JavaScript</h3>
+                  <span className="text-xs text-slate-400 ml-auto">{jsInput.length} chars</span>
+                </div>
+                <textarea
+                  value={jsInput}
+                  onChange={(e) => setJsInput(e.target.value)}
+                  placeholder="Paste your JavaScript code here..."
+                  className="w-full h-56 p-4 bg-slate-950 text-slate-100 font-mono text-sm resize-none border-0 focus:outline-none focus:ring-0"
+                />
+              </div>
+            </div>
+
+            {/* Save Section */}
+            <div className="bg-slate-800/50 border border-slate-700/50 rounded-xl overflow-hidden backdrop-blur-sm">
+              <div className="border-b border-slate-700/50 bg-slate-800/80 px-6 py-4">
+                <h3 className="text-sm font-bold text-white mb-4">Save Snippet</h3>
+                <div className="flex gap-4">
+                  <input
+                    type="text"
+                    value={snippetTitle}
+                    onChange={(e) => setSnippetTitle(e.target.value)}
+                    placeholder="Snippet title..."
+                    className="flex-1 px-4 py-2 bg-slate-700 border border-slate-600 rounded-lg text-white placeholder-slate-500 text-sm focus:outline-none focus:border-blue-500 transition-colors"
+                  />
+                  <button
+                    onClick={handleSaveSnippet}
+                    className="px-6 py-2 bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-white font-medium rounded-lg flex items-center gap-2 transition-all shadow-lg shadow-blue-500/30 whitespace-nowrap"
+                  >
+                    <Save className="w-4 h-4" />
+                    Save
+                  </button>
+                </div>
               </div>
             </div>
 

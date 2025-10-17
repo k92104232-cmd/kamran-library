@@ -19,10 +19,13 @@ import {
   FolderPlus,
   Trash2,
   Copy,
+  Code2,
+  Zap,
+  ChevronDown,
 } from "lucide-react";
 
 export default function Index() {
-  const [isDark, setIsDark] = useState(false);
+  const [isDark, setIsDark] = useState(true);
   const [codeInput, setCodeInput] = useState("");
   const [code, setCode] = useState<CodeSnippet>({
     html: "",
@@ -36,16 +39,14 @@ export default function Index() {
   const [snippetTitle, setSnippetTitle] = useState("Untitled Snippet");
   const [newFolderName, setNewFolderName] = useState("");
   const [showNewFolderInput, setShowNewFolderInput] = useState(false);
+  const [activeTab, setActiveTab] = useState<"html" | "css" | "js" | "all">("all");
+  const [expandedFolders, setExpandedFolders] = useState<Record<string, boolean>>({
+    default: true,
+  });
 
   // Initialize dark mode from system preference
   useEffect(() => {
-    const prefersDark = window.matchMedia(
-      "(prefers-color-scheme: dark)"
-    ).matches;
-    setIsDark(prefersDark);
-    if (prefersDark) {
-      document.documentElement.classList.add("dark");
-    }
+    document.documentElement.classList.add("dark");
   }, []);
 
   // Load snippets and folders on mount
@@ -54,14 +55,12 @@ export default function Index() {
     setFolders(StorageManager.getFolders());
   }, []);
 
-  // Apply dark mode
-  useEffect(() => {
-    if (isDark) {
-      document.documentElement.classList.add("dark");
-    } else {
-      document.documentElement.classList.remove("dark");
-    }
-  }, [isDark]);
+  const toggleFolder = (folderId: string) => {
+    setExpandedFolders((prev) => ({
+      ...prev,
+      [folderId]: !prev[folderId],
+    }));
+  };
 
   // Update code preview in real-time
   useEffect(() => {

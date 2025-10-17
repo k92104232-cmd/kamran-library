@@ -27,7 +27,9 @@ import {
 
 export default function Index() {
   const [isDark, setIsDark] = useState(true);
-  const [codeInput, setCodeInput] = useState("");
+  const [htmlInput, setHtmlInput] = useState("");
+  const [cssInput, setCssInput] = useState("");
+  const [jsInput, setJsInput] = useState("");
   const [code, setCode] = useState<CodeSnippet>({
     html: "",
     css: "",

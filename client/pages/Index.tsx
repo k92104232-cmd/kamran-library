@@ -278,11 +278,20 @@ export default function Index() {
               </div>
             </div>
 
-            {/* Preview Section */}
+            {/* Preview and Code Sections Container */}
             <div className="glass-light p-8 rounded-2xl">
               <h2 className="text-2xl font-bold mb-4">Live Preview</h2>
-              <div className="h-96 rounded-xl overflow-hidden border border-white/20">
-                <LivePreview code={code} isDark={isDark} />
+              <div>
+                <div className="flex gap-5 max-lg:flex-col">
+                  {/* Code Display Column */}
+                  <div className="flex flex-col w-1/2 max-lg:w-full">
+                    <div className="rounded-xl overflow-hidden border border-white/20 h-96"></div>
+                  </div>
+                  {/* Preview Column */}
+                  <div className="flex flex-col w-1/2 max-lg:w-full">
+                    <LivePreview code={code} isDark={isDark} />
+                  </div>
+                </div>
               </div>
             </div>
 

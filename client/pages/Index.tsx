@@ -67,9 +67,12 @@ export default function Index() {
 
   // Update code preview in real-time
   useEffect(() => {
-    const separated = separateCode(codeInput);
-    setCode(separated);
-  }, [codeInput]);
+    setCode({
+      html: htmlInput,
+      css: cssInput,
+      js: jsInput,
+    });
+  }, [htmlInput, cssInput, jsInput]);
 
   const handleSaveSnippet = () => {
     if (!codeInput.trim()) {

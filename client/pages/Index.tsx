@@ -396,9 +396,9 @@ export default function Index() {
                       key={snippet.id}
                       className="group bg-slate-700/50 border border-slate-600/50 rounded-lg p-4 hover:border-blue-500/50 hover:bg-slate-700/80 transition-all cursor-pointer"
                       onClick={() => {
-                        setCodeInput(
-                          `${snippet.html}\n<style>\n${snippet.css}\n</style>\n<script>\n${snippet.js}\n</script>`
-                        );
+                        setHtmlInput(snippet.html);
+                        setCssInput(snippet.css);
+                        setJsInput(snippet.js);
                       }}
                     >
                       <div className="flex items-start justify-between mb-3">
@@ -428,9 +428,9 @@ export default function Index() {
                         <button
                           onClick={(e) => {
                             e.stopPropagation();
-                            setCodeInput(
-                              `${snippet.html}\n<style>\n${snippet.css}\n</style>\n<script>\n${snippet.js}\n</script>`
-                            );
+                            setHtmlInput(snippet.html);
+                            setCssInput(snippet.css);
+                            setJsInput(snippet.js);
                           }}
                           className="flex-1 px-3 py-1 bg-blue-600/20 text-blue-300 rounded text-xs hover:bg-blue-600/40 transition-colors"
                         >

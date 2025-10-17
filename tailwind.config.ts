@@ -80,10 +80,25 @@ export default {
             height: "0",
           },
         },
+        gradient: {
+          "0%": {
+            backgroundPosition: "0% center",
+          },
+          "50%": {
+            backgroundPosition: "100% center",
+          },
+          "100%": {
+            backgroundPosition: "0% center",
+          },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        gradient: "gradient 3s ease infinite",
+      },
+      backgroundSize: {
+        size: "200% 200%",
       },
     },
   },

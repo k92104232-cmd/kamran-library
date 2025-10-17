@@ -56,7 +56,9 @@ export default function CodeSnippet({
   return (
     <div className="glass-light w-full flex flex-col rounded-2xl overflow-hidden">
       {/* Header */}
-      <div className={`bg-gradient-to-r ${languageColors[language]} px-6 py-3 flex items-center justify-between`}>
+      <div
+        className={`bg-gradient-to-r ${languageColors[language]} px-6 py-3 flex items-center justify-between`}
+      >
         <span className="font-semibold text-white text-sm">
           {languageLabels[language]}
         </span>

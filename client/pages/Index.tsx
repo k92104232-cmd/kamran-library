@@ -42,8 +42,12 @@ export default function Index() {
   const [snippetTitle, setSnippetTitle] = useState("Untitled Snippet");
   const [newFolderName, setNewFolderName] = useState("");
   const [showNewFolderInput, setShowNewFolderInput] = useState(false);
-  const [activeTab, setActiveTab] = useState<"html" | "css" | "js" | "all">("all");
-  const [expandedFolders, setExpandedFolders] = useState<Record<string, boolean>>({
+  const [activeTab, setActiveTab] = useState<"html" | "css" | "js" | "all">(
+    "all",
+  );
+  const [expandedFolders, setExpandedFolders] = useState<
+    Record<string, boolean>
+  >({
     default: true,
   });
 
@@ -162,7 +166,11 @@ export default function Index() {
               className="p-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-slate-100 transition-colors"
               title="Toggle theme"
             >
-              {isDark ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
+              {isDark ? (
+                <Sun className="w-5 h-5" />
+              ) : (
+                <Moon className="w-5 h-5" />
+              )}
             </button>
           </div>
         </div>
@@ -227,7 +235,10 @@ export default function Index() {
                       <span className="text-sm font-medium">{folder.name}</span>
                       <div className="flex items-center gap-1">
                         <span className="text-xs text-slate-500 font-medium">
-                          {snippets.filter((s) => s.folder === folder.id).length}
+                          {
+                            snippets.filter((s) => s.folder === folder.id)
+                              .length
+                          }
                         </span>
                         {folder.id !== "default" && (
                           <button
@@ -278,7 +289,9 @@ export default function Index() {
                 <div className="border-b border-slate-700/50 bg-gradient-to-r from-orange-900/30 to-red-900/30 px-6 py-3 flex items-center gap-2">
                   <div className="w-2 h-2 rounded-full bg-orange-500"></div>
                   <h3 className="text-sm font-bold text-white">HTML</h3>
-                  <span className="text-xs text-slate-400 ml-auto">{htmlInput.length} chars</span>
+                  <span className="text-xs text-slate-400 ml-auto">
+                    {htmlInput.length} chars
+                  </span>
                 </div>
                 <textarea
                   value={htmlInput}
@@ -293,7 +306,9 @@ export default function Index() {
                 <div className="border-b border-slate-700/50 bg-gradient-to-r from-blue-900/30 to-cyan-900/30 px-6 py-3 flex items-center gap-2">
                   <div className="w-2 h-2 rounded-full bg-blue-500"></div>
                   <h3 className="text-sm font-bold text-white">CSS</h3>
-                  <span className="text-xs text-slate-400 ml-auto">{cssInput.length} chars</span>
+                  <span className="text-xs text-slate-400 ml-auto">
+                    {cssInput.length} chars
+                  </span>
                 </div>
                 <textarea
                   value={cssInput}
@@ -308,7 +323,9 @@ export default function Index() {
                 <div className="border-b border-slate-700/50 bg-gradient-to-r from-yellow-900/30 to-amber-900/30 px-6 py-3 flex items-center gap-2">
                   <div className="w-2 h-2 rounded-full bg-yellow-500"></div>
                   <h3 className="text-sm font-bold text-white">JavaScript</h3>
-                  <span className="text-xs text-slate-400 ml-auto">{jsInput.length} chars</span>
+                  <span className="text-xs text-slate-400 ml-auto">
+                    {jsInput.length} chars
+                  </span>
                 </div>
                 <textarea
                   value={jsInput}
@@ -322,7 +339,9 @@ export default function Index() {
             {/* Save Section */}
             <div className="bg-slate-800/50 border border-slate-700/50 rounded-xl overflow-hidden backdrop-blur-sm">
               <div className="border-b border-slate-700/50 bg-slate-800/80 px-6 py-4">
-                <h3 className="text-sm font-bold text-white mb-4">Save Snippet</h3>
+                <h3 className="text-sm font-bold text-white mb-4">
+                  Save Snippet
+                </h3>
                 <div className="flex gap-4">
                   <input
                     type="text"
@@ -408,7 +427,7 @@ export default function Index() {
                           </h3>
                           <p className="text-xs text-slate-400 mt-1">
                             {StorageManager.getFolders().find(
-                              (f) => f.id === snippet.folder
+                              (f) => f.id === snippet.folder,
                             )?.name || snippet.folder}{" "}
                             • {new Date(snippet.createdAt).toLocaleDateString()}
                           </p>

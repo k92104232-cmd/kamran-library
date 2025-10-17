@@ -6,7 +6,10 @@ interface LivePreviewProps {
   isDark?: boolean;
 }
 
-export default function LivePreview({ code, isDark = false }: LivePreviewProps) {
+export default function LivePreview({
+  code,
+  isDark = false,
+}: LivePreviewProps) {
   const iframeRef = useRef<HTMLIFrameElement>(null);
 
   useEffect(() => {

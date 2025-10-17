@@ -98,8 +98,10 @@ export function generateId(): string {
  * Generates a shareable link token
  */
 export function generateShareLink(): string {
-  return Math.random().toString(36).substring(2, 15) +
-    Math.random().toString(36).substring(2, 15);
+  return (
+    Math.random().toString(36).substring(2, 15) +
+    Math.random().toString(36).substring(2, 15)
+  );
 }
 
 /**
@@ -108,7 +110,7 @@ export function generateShareLink(): string {
 export function createSnippet(
   code: CodeSnippet,
   title: string = "Untitled Snippet",
-  folder: string = "default"
+  folder: string = "default",
 ): StoredSnippet {
   return {
     ...code,
@@ -180,7 +182,7 @@ export const StorageManager = {
       return this.getSnippets().filter(
         (s) =>
           s.title.toLowerCase().includes(lowerQuery) ||
-          s.folder.toLowerCase().includes(lowerQuery)
+          s.folder.toLowerCase().includes(lowerQuery),
       );
     } catch {
       return [];
